@@ -81,6 +81,6 @@ int main(int argc, char *argv[]) {
         if(strcmp(argv[3], "--tcp") == 0)
             return connect(argv[1], atoi(argv[2]), IPPROTO_TCP);
     }
-    std::cout << "Wrong parameters. Type 'server --help' for help" << std::endl;
+    std::cout << "Wrong parameters. Type 'client --help' for help" << std::endl;
     return CODE_SUCCESS;
 }
