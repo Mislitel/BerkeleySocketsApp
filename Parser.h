@@ -7,6 +7,9 @@
 #include <iostream>
 #include <numeric>
 
-void parse(const char* s);
+class Parser {
+public:
+    static void parse(const char* s);
+};
 
 #endif //BERKELEYSOCKETSAPP_PARSER_H

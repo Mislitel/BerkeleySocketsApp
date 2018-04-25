@@ -1,6 +1,6 @@
-#include "parser.h"
+#include "Parser.h"
 
-void parse(const char* s) {
+void Parser::parse(const char* s) {
     std::vector<short> digits;
     for(auto i = 0; i < strlen(s); i++)
         if(s[i] >= '0' && s[i] <= '9')

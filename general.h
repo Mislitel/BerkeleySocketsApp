@@ -10,11 +10,15 @@
 #include <cerrno>
 #include <cstring>
 #include <iostream>
+#include <stdexcept>
+#include <thread>
+#include <mutex>
 
-#include "parser.h"
+#include "Parser.h"
 
 #define DEFAULT_SERVER_IP           "127.0.0.1"
-#define DEFAULT_SERVER_PORT         6111
+#define DEFAULT_TCP_PORT            6111
+#define DEFAULT_UDP_PORT            4111
 
 #define MAX_MESSAGE_SIZE            65536
 
@@ -34,6 +38,7 @@
 #define MESSAGE_RECEIVE_FAIL        "Fail to receive"
 #define MESSAGE_SEND_FAIL           "Fail to send"
 #define MESSAGE_CONNECTION_FAIL     "Fail to connect"
+#define MESSAGE_WRONG_PROTOCOL      "Wrong protocol"
 
 #define COMMAND_QUIT                "quit"
 
