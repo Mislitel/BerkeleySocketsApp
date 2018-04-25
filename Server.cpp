@@ -5,7 +5,6 @@
 std::mutex Server::mtx;
 
 Server::Server(const char *ip, unsigned short port) {
-    // Address initialization and binding
     std::memset(&address, 0, sizeof(address));
     address.sin_family = AF_INET;
     address.sin_port = htons(port);

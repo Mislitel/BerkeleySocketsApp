@@ -23,8 +23,8 @@ void Client::connectTo(const char *ip, unsigned short port, Protocol protocol) {
                 IPPROTO_UDP
         );
     }
-    if (s_socket == 0) {
-        perror(MESSAGE_SOCKET_FAIL);
+    if (s_socket < 0) {
+        perror(SUBJECT_CLIENT);
         throw std::runtime_error(MESSAGE_SOCKET_FAIL);
     }
 
@@ -35,7 +35,7 @@ void Client::connectTo(const char *ip, unsigned short port, Protocol protocol) {
     address.sin_addr.s_addr = inet_addr(ip);
     if (connect(s_socket, (sockaddr*)&address, sizeof(address)) < 0) {
         close(s_socket);
-        perror(MESSAGE_CONNECTION_FAIL);
+        perror(SUBJECT_CLIENT);
         throw std::runtime_error(MESSAGE_CONNECTION_FAIL);
     }
     std::cout << "Connected to " << ip << ":" << port
@@ -46,7 +46,8 @@ void Client::connectTo(const char *ip, unsigned short port, Protocol protocol) {
 void Client::disconnect() {
     close(s_socket);
     connected = false;
-    std::cout << "Disconnected from " << inet_ntoa(address.sin_addr) << ":" << htons(address.sin_port) << std::endl;
+    std::cout << "Disconnected from " << inet_ntoa(address.sin_addr)
+              << ":" << htons(address.sin_port) << std::endl;
 }
 
 void Client::cycleSendReceive() {
@@ -61,7 +62,7 @@ void Client::cycleSendReceive() {
         auto s_len = send(s_socket, message, strlen(message) + 1, 0);
         if(s_len <= 0) {
             close(s_socket);
-            perror(MESSAGE_SEND_FAIL);
+            perror(SUBJECT_CLIENT);
             throw std::runtime_error(MESSAGE_SEND_FAIL);
         }
         // If quit
@@ -73,7 +74,7 @@ void Client::cycleSendReceive() {
         auto r_len = recv(s_socket, message, sizeof(message), 0);
         if(r_len <= 0) {
             close(s_socket);
-            perror(MESSAGE_RECEIVE_FAIL);
+            perror(SUBJECT_CLIENT);
             throw std::runtime_error(MESSAGE_RECEIVE_FAIL);
         }
         std::cout << "s: " << message << std::endl;

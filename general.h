@@ -11,8 +11,6 @@
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
-#include <thread>
-#include <mutex>
 
 #include "Parser.h"
 
@@ -22,15 +20,6 @@
 
 #define MAX_MESSAGE_SIZE            65536
 
-#define CODE_SUCCESS                0x0
-#define CODE_SOCKET_FAIL            0x1
-#define CODE_BIND_FAIL              0x2
-#define CODE_LISTEN_FAIL            0x3
-#define CODE_ACCEPT_FAIL            0x4
-#define CODE_RECEIVE_FAIL           0x5
-#define CODE_SEND_FAIL              0x6
-#define CODE_CONNECTION_FAIL        0x7
-
 #define MESSAGE_SOCKET_FAIL         "Fail to create the socket"
 #define MESSAGE_BIND_FAIL           "Fail to bind"
 #define MESSAGE_LISTEN_FAIL         "Fail to listen"
@@ -39,6 +28,10 @@
 #define MESSAGE_SEND_FAIL           "Fail to send"
 #define MESSAGE_CONNECTION_FAIL     "Fail to connect"
 #define MESSAGE_WRONG_PROTOCOL      "Wrong protocol"
+
+#define SUBJECT_TCP_SERVER          "Server TCP"
+#define SUBJECT_UDP_SERVER          "Server UDP"
+#define SUBJECT_CLIENT              "Client"
 
 #define COMMAND_QUIT                "quit"
 

@@ -3,6 +3,9 @@
 
 #include "general.h"
 
+#include <thread>
+#include <mutex>
+
 class Server {
 public:
     Server() {}

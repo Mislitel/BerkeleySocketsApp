@@ -13,19 +13,20 @@ void TcpServer::start() {
             IPPROTO_TCP
     );
     if (s_socket < 0) {
-        perror("TCP");
+        perror(SUBJECT_TCP_SERVER);
         throw std::runtime_error(MESSAGE_SOCKET_FAIL);
     }
     // Socket bind
     if (bind(s_socket, (sockaddr*)&address, sizeof(address)) < 0) {
-        perror(MESSAGE_BIND_FAIL);
+        perror(SUBJECT_TCP_SERVER);
         throw std::runtime_error(MESSAGE_BIND_FAIL);
     }
-    if (listen(s_socket, 2) < 0) {      // Здесь указан максимум 1 клиент! Может привести к проблемам!
-        perror(MESSAGE_LISTEN_FAIL);
+    if (listen(s_socket, 1) < 0) {
+        perror(SUBJECT_TCP_SERVER);
         throw std::runtime_error(MESSAGE_LISTEN_FAIL);
     }
-    std::cout << "Server TCP on " << inet_ntoa(address.sin_addr) << ":" << htons(address.sin_port) << " is listening..." << std::endl;
+    std::cout << "Server TCP on " << inet_ntoa(address.sin_addr)
+              << ":" << htons(address.sin_port) << " is listening..." << std::endl;
     mtx.unlock();
     tcp_processing();
 }
@@ -37,8 +38,7 @@ void TcpServer::tcp_processing() {
     while (true) {
         int c_socket = accept(s_socket, (sockaddr*)&remote, &addrlen);
         if (c_socket < 0) {
-            perror(MESSAGE_ACCEPT_FAIL);
-            close(c_socket);
+            perror(SUBJECT_TCP_SERVER);
             throw std::runtime_error(MESSAGE_ACCEPT_FAIL);
         }
         std::cout << "Client " << inet_ntoa(remote.sin_addr)
@@ -61,7 +61,8 @@ void TcpServer::accepted(int c_socket, sockaddr_in remote) {
             break;
         }
         mtx.lock();
-        std::cout << "TCP:" <<  inet_ntoa(remote.sin_addr) << ":" << remote.sin_port << ": " << buffer << std::endl;
+        std::cout << "TCP:" <<  inet_ntoa(remote.sin_addr)
+                  << ":" << htons(remote.sin_port) << ": " << buffer << std::endl;
         // If quit
         if (strcmp(buffer, COMMAND_QUIT) == 0) {
             mtx.unlock();
