@@ -46,6 +46,7 @@ void TcpServer::tcp_processing() {
 
         clients.emplace_back(std::thread(&TcpServer::accepted, this, c_socket, remote));
     }
+    // Fake join for correct work of threads
     for(auto& client: clients)
         client.join();
 }

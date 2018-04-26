@@ -151,9 +151,9 @@ int main(int argc, char *argv[]) {
                 std::cout << "Options:" << std::endl;
                 std::cout << " -h, --help\tdisplay this help and exit" << std::endl;
                 std::cout << " -t, --tcp\tuse TCP for data transfer" << std::endl;
-                std::cout << " -T, --test\trun test mode" << std::endl;
+                std::cout << " -T, --test\trun test mode (default ip and port only)" << std::endl;
                 std::cout << " -u, --udp\tuse UDP for data transfer" << std::endl;
-                std::cout << " -v, --very-long-message-test\trun test with very long message" << std::endl;
+                std::cout << " -v, --vlmt\trun test with very long message (default ip and port only)" << std::endl;
                 return 0;
             }
             if (strcmp(argv[1], "--udp") == 0 || strcmp(argv[1], "-u") == 0) {
@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
                 test();
                 return 0;
             }
-            if (strcmp(argv[1], "--very-long-message-test") == 0 || strcmp(argv[1], "-v") == 0) {
+            if (strcmp(argv[1], "--vlmt") == 0 || strcmp(argv[1], "-v") == 0) {
                 very_long_message_test();
                 return 0;
             }
