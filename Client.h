@@ -15,6 +15,7 @@ public:
     void connectTo(const char* ip, unsigned short port, Protocol protocol);
     void disconnect();
 
+    void singleSendReceive(const char* message);
     void cycleSendReceive();
 
 private:

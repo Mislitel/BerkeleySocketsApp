@@ -18,7 +18,7 @@
 #define DEFAULT_TCP_PORT            6111
 #define DEFAULT_UDP_PORT            4111
 
-#define MAX_MESSAGE_SIZE            65536
+#define MAX_MESSAGE_SIZE            65506   // The longest possible message (without headers)
 
 #define MESSAGE_SOCKET_FAIL         "Fail to create the socket"
 #define MESSAGE_BIND_FAIL           "Fail to bind"

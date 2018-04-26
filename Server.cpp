@@ -48,9 +48,12 @@ int main(int argc, char *argv[]) {
                 std::cout << "Examples:" << std::endl;
                 std::cout << " server\t\t\t\t\t\t\t\t\t\t\t\tlaunches server TCP on 127.0.0.1:6111" << std::endl;
                 std::cout << " server --udp\t\t\t\t\t\t\t\t\t\tlaunches server UDP on 127.0.0.1:4111" << std::endl;
-                std::cout << " server --both\t\t\t\t\t\t\t\t\t\tlaunches server TCP on 127.0.0.1:6111 and server UDP on 127.0.0.1:4111" << std::endl;
-                std::cout << " server --tcp 127.0.0.1 1234\t\t\t\t\t\t\tlaunches server TCP on 127.0.0.1:1234" << std::endl;
-                std::cout << " server --tcp 127.0.0.1 1234 --udp 127.0.0.1 3456\tlaunches server TCP on 127.0.0.1:1234 and server UDP on 127.0.0.1:3456" << std::endl;
+                std::cout << " server --both\t\t\t\t\t\t\t\t\t\t"
+                             << "launches server TCP on 127.0.0.1:6111 and server UDP on 127.0.0.1:4111" << std::endl;
+                std::cout << " server --tcp 127.0.0.1 1234\t\t\t\t\t\t\tlaunches server TCP on 127.0.0.1:1234"
+                             << std::endl;
+                std::cout << " server --tcp 127.0.0.1 1234 --udp 127.0.0.1 3456\t"
+                             << "launches server TCP on 127.0.0.1:1234 and server UDP on 127.0.0.1:3456" << std::endl;
                 return 0;
             }
             if (strcmp(argv[1], "--udp") == 0 || strcmp(argv[1], "-u") == 0) {
