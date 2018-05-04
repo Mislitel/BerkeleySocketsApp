@@ -3,25 +3,21 @@
 
 #include "general.h"
 
-enum class Protocol { TCP, UDP };
-
 class Client {
 public:
-    Client() : connected(false) {}
-    Client(const Client& source) : s_socket(source.s_socket), connected(source.connected) {}
+    Client() : s_socket(0), connected(false) {}
     ~Client();
     bool isConnected() { return connected; }
 
-    void connectTo(const char* ip, unsigned short port, Protocol protocol);
-    void disconnect();
+    virtual void connectTo(const char* ip, unsigned short port) = 0;
+    virtual void disconnect();
 
-    void singleSendReceive(const char* message);
+    virtual void singleSendReceive(const char* message) = 0;
     void cycleSendReceive();
 
-private:
+protected:
     int s_socket;
-    sockaddr_in address;
-    char message[MAX_MESSAGE_SIZE];
+    char message[MAX_MESSAGE_SIZE] = {'\0'};
     bool connected;
 };
 

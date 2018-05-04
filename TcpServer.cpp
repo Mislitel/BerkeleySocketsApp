@@ -44,23 +44,25 @@ void TcpServer::tcp_processing() {
         std::cout << "Client " << inet_ntoa(remote.sin_addr)
                   << ":" << remote.sin_port << " connected" << std::endl;
 
-        clients.emplace_back(std::thread(&TcpServer::accepted, this, c_socket, remote));
+        std::thread(&TcpServer::accepted, this, c_socket, remote).detach();
     }
-    // Fake join for correct work of threads
-    for(auto& client: clients)
-        client.join();
 }
 
 
 void TcpServer::accepted(int c_socket, sockaddr_in remote) {
     while (true) {
         // Data receiving
-        auto r_len = recv(c_socket, buffer, sizeof(buffer), 0);
-        if (r_len <= 0) {
-            close(c_socket);
-            perror(MESSAGE_RECEIVE_FAIL);
+        ssize_t r_len = receiveMessage(c_socket, buffer, MAX_MESSAGE_SIZE);
+        if (r_len == 0) {
+            std::cerr << "Client closed connection." << std::endl;
             break;
         }
+        if (r_len < 0) {
+            perror(MESSAGE_RECEIVE_FAIL);
+            close(c_socket);
+            break;
+        }
+
         mtx.lock();
         std::cout << "TCP:" <<  inet_ntoa(remote.sin_addr)
                   << ":" << htons(remote.sin_port) << ": " << buffer << std::endl;
@@ -73,10 +75,14 @@ void TcpServer::accepted(int c_socket, sockaddr_in remote) {
         Parser::parse(buffer);
         mtx.unlock();
         // Answer sending
-        auto s_len = send(c_socket, buffer, strlen(buffer) + 1, 0);
-        if (s_len <= 0) {
-            close(c_socket);
+        ssize_t s_len = sendMessage(c_socket, buffer, static_cast<uint32_t>(strlen(buffer) + 1));
+        if (s_len == 0) {
+            std::cerr << "Client closed connection." << std::endl;
+            break;
+        }
+        if (s_len < 0) {
             perror(MESSAGE_SEND_FAIL);
+            close(c_socket);
             break;
         }
     }

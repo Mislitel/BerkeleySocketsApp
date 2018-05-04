@@ -2,8 +2,9 @@
 #define BERKELEYSOCKETSAPP_TCPSERVER_H
 
 #include "Server.h"
+#include "TcpTools.h"
 
-class TcpServer: public Server {
+class TcpServer: public Server, public TcpTools {
 public:
     TcpServer() : TcpServer(DEFAULT_SERVER_IP, DEFAULT_TCP_PORT) {}
     TcpServer(const char* ip, unsigned short port);

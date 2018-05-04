@@ -2,8 +2,9 @@
 #define BERKELEYSOCKETSAPP_UDPSERVER_H
 
 #include "Server.h"
+#include "UdpTools.h"
 
-class UdpServer: public Server {
+class UdpServer: public Server, public UdpTools {
 public:
     UdpServer() : UdpServer(DEFAULT_SERVER_IP, DEFAULT_UDP_PORT) {}
     UdpServer(const char* ip, unsigned short port);
